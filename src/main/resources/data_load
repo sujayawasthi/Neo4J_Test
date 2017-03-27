@@ -1,0 +1,60 @@
+CREATE (big:BusinessEntity { name: 'BigCompany' ,grade:5})
+RETURN big;
+CREATE (med1:BusinessEntity { name: 'MidCompany' ,grade:7})
+RETURN med1;
+CREATE (med2:BusinessEntity { name: 'MidCompany2' ,grade:1})
+RETURN med2;
+CREATE (sm:BusinessEntity { name: 'SmallCompany1' ,grade:3})
+RETURN sm;
+CREATE (sm:BusinessEntity { name: 'SmallCompany2' ,grade:4})
+RETURN sm;
+CREATE (sm:BusinessEntity { name: 'SmallCompany3' ,grade:9})
+RETURN sm;
+
+CREATE (sm:Facility { name: 'Facility1' ,grade:9})
+RETURN sm;
+CREATE (sm:Facility { name: 'Facility2' ,grade:2})
+RETURN sm;
+CREATE (sm:Facility { name: 'Facility3' ,grade:8})
+RETURN sm;
+CREATE (sm:Facility { name: 'Facility4' ,grade:6})
+RETURN sm;
+
+MATCH (a:BusinessEntity),(b:BusinessEntity)
+WHERE a.name = 'BigCompany' AND b.name = 'MidCompany'
+CREATE (a)-[r:isParentOf]->(b)
+RETURN r;
+MATCH (a:BusinessEntity),(b:BusinessEntity)
+WHERE a.name = 'BigCompany' AND b.name = 'MidCompany2'
+CREATE (a)-[r:isParentOf]->(b)
+RETURN r;
+MATCH (a:BusinessEntity),(b:BusinessEntity)
+WHERE a.name = 'MidCompany' AND b.name = 'SmallCompany1'
+CREATE (a)-[r:isParentOf]->(b)
+RETURN r;
+MATCH (a:BusinessEntity),(b:BusinessEntity)
+WHERE a.name = 'MidCompany' AND b.name = 'SmallCompany2'
+CREATE (a)-[r:isParentOf]->(b)
+RETURN r;
+MATCH (a:BusinessEntity),(b:BusinessEntity)
+WHERE a.name = 'MidCompany2' AND b.name = 'SmallCompany3'
+CREATE (a)-[r:isParentOf]->(b)
+RETURN r;
+
+MATCH (a:BusinessEntity),(b:Facility)
+WHERE a.name = 'SmallCompany1' AND b.name = 'Facility1'
+CREATE (a)-[r:owns]->(b)
+RETURN r;
+MATCH (a:BusinessEntity),(b:Facility)
+WHERE a.name = 'SmallCompany1' AND b.name = 'Facility2'
+CREATE (a)-[r:owns]->(b)
+RETURN r;
+MATCH (a:BusinessEntity),(b:Facility)
+WHERE a.name = 'SmallCompany2' AND b.name = 'Facility3'
+CREATE (a)-[r:owns]->(b)
+RETURN r;
+MATCH (a:BusinessEntity),(b:Facility)
+WHERE a.name = 'SmallCompany3' AND b.name = 'Facility4'
+CREATE (a)-[r:owns]->(b)
+RETURN r;
+
